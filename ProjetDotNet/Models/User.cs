@@ -4,29 +4,32 @@ namespace ProjetDotNet.Models
 {
 	public class User
 	{
-		public enum UserType
-		{
-			Student,
-			Teacher
-		}
 
 		[Key]
 		public int Id { get; set; }
 		public string Name { get; set; }
-		//public UserType UserType { get; set; }
 		public string Email { get; set; }
 		public string Password { get; set; }
+		public string Type { get; set; }
 		public string Phone { get; set; }
 		public string Address { get; set; }
+		public string Image { get; set; }
+		
 
-		public User(int id, string name, string email, string password, string phone, string address)
+		public User(string name, string email, string password, string type, string phone, string address, string image)
 		{
-			Id = id;
 			Name = name;
 			Email = email;
 			Password = password;
+			Type = type;
 			Phone = phone;
 			Address = address;
+			Image = image;
+		}
+		override
+		public string ToString()
+		{
+			return $"Name : {Name}, Email : {Email}, Password : {Password}, Phone : {Phone} Address : {Address}, Image : {Image}";
 		}
 	}
 }

@@ -1,19 +1,37 @@
 ﻿<link rel="stylesheet" runat="server" media="screen" href="~/css/login.css" />
+@{
+	if(ViewBag.EmailFound != null ){
+		<div class= "alert alert-danger"
+		style="
+				padding: 3%;
+				text-align: center;
+				width: 100%;
+				color:red;
+				background-color:hsl(0,43.48%,90.98%);
+				"> 
+		This Email @ViewBag.EmailFound is already used</div>
+	}
+}
+
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form method="post" action="#">
+		<form method="post" asp-controller="connection" asp-action="SignUp">
             <h1>Create Account</h1>
             <span>or use your email for registration</span>
-            <input type="text" placeholder="Name" name="Name"/>
-            <input type="email" placeholder="Email" name="Email" />
-            <input type="password" placeholder="Password" name="Password" />
-            <input type="text" placeholder="Phone Number" name="Phone" />
-            <input type="text" placeholder="Address" name="Address" />
+            <input type="text" placeholder="Name" name="name"/>
+            <input type="email" placeholder="Email" name="email" />
+            <input type="password" placeholder="Password" name="password" />
+			<input type="radio" id="choice1" name="type" value="email" />
+			<label for="choice1">Teacher</label>
+			<input type="radio" id="choice2" name="type" value="phone" />
+			<label for="choice2">Student</label>
+            <input type="text" placeholder="Phone Number" name="phone" />
+            <input type="text" placeholder="Address" name="address" />
             <button type="Submit">Sign Up</button>
         </form>
 	</div>
 	<div class="form-container sign-in-container ">
-		<form method="post" asp-controller="login" asp-action="Index">
+		<form method="post" asp-controller="connection" asp-action="Login">
 			<h1>Sign in</h1>
 			<span>or use your account</span>
 			<input type="email" placeholder="Email" name="Email"/>

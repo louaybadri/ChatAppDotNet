@@ -1,7 +1,7 @@
-﻿
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using ProjetDotNet.Data.Context;
 
-namespace ProjetDotNet.Data
+namespace ProjetDotNet.Data.Repository
 {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
@@ -29,17 +29,16 @@ namespace ProjetDotNet.Data
 			try
 			{
 				_applicationDbContext.Set<TEntity>().Add(entity);
+
 				return true;
 			}
 			catch (Exception ex)
 			{
 				throw ex;
 			}
-
 		}
 		public bool AddRange(IEnumerable<TEntity> entities)
 		{
-
 			try
 			{
 				_applicationDbContext.Set<TEntity>().AddRange(entities);
@@ -50,7 +49,6 @@ namespace ProjetDotNet.Data
 				throw ex;
 			}
 		}
-
 
 		public bool Remove(TEntity entity)
 		{

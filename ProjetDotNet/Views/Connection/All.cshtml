@@ -1,0 +1,34 @@
+﻿@model List<User>
+@{
+	ViewData["Title"] = "All";
+}
+<h1>User List</h1>
+@{
+	<table class="table table-striped table-bordered">
+			<thead>
+		   <tr>
+			  <th scope="col">#</th>
+			  <th scope="col">Name</th>
+			  <th scope="col">Email</th>
+			  <th scope="col">Password</th>
+			  <th scope="col">Phone</th>
+			  <th scope="col">Address</th>
+			  <th scope="col">Image</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			@foreach (User user in Model)
+			{	
+					<tr>
+						<th scope="row">@user.Id</th>
+						<td>@user.Name</td>
+						<td>@user.Email</td>
+						<td>@user.Password</td>
+						<td>@user.Phone</td>
+						<td>@user.Address</td>
+					<!-- <td><img src="@user.Image" alt="@user.Id's image" width="500" height="500"></td> -->
+					</tr>
+			}
+		  </tbody>
+	</table>
+}

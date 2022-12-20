@@ -1,6 +1,6 @@
 ﻿using ProjetDotNet.Models;
 
-namespace ProjetDotNet.Data
+namespace ProjetDotNet.Data.FactoryMethod
 {
 	public interface IUserFactory
 	{

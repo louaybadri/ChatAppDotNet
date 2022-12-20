@@ -7,15 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Repository\ITeacherRepository.cs" />
+    <Compile Remove="Data\Repository\TeacherRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\css\NewFile.txt" />
     <Content Remove="wwwroot\js\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Data\NewFile.txt" />
+    <None Remove="Data\Repository\NewFile.txt" />
     <None Remove="Models\NewFile.txt" />
+    <None Remove="Views\Connection\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.12" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.1" />
@@ -26,6 +35,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
   </ItemGroup>
 
 </Project>
