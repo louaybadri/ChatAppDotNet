@@ -2,6 +2,10 @@
 using System.Diagnostics;
 using ProjetDotNet.Data.Context;
 using ProjetDotNet.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
+using NuGet.Protocol;
+
 namespace ProjetDotNet.Controllers
 {
 	public class ConnectionController : Controller
@@ -11,7 +15,14 @@ namespace ProjetDotNet.Controllers
 		[Route("/Connection")]
 		public IActionResult Login()
 		{
-			return View("Index");
+			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
+			{
+				return View("Index");
+			}
+			else
+			{
+				return Redirect("/Messenger");
+			}
 		}
 
 		[HttpPost]
@@ -19,9 +30,20 @@ namespace ProjetDotNet.Controllers
 		[Route("/Connection")]
 		public IActionResult Login(string email, string password)
 		{
+
 			UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
 			User? user = unitOfWork.Users.Find(x => x.Email == email && x.Password == password).FirstOrDefault();
-			return RedirectToAction("Index", "Messenger");
+			ViewBag.Found = user is not null;
+			if (user is not null)
+			{
+				HttpContext.Session.SetString("currentUser", user.ToJson().ToString());
+				User user2 = HttpContext.Session.GetString("currentUser").FromJson<User>();
+				Debug.WriteLine(user2.ToString());
+				return Redirect("/Messenger");
+			}
+
+
+			return View("Index");
 		}
 
 		[HttpPost]
@@ -32,7 +54,7 @@ namespace ProjetDotNet.Controllers
 			int imageIndex = (unitOfWork.Users.GetAll().ToList().Count) % 16 + 1;
 			String imageName = "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-" + imageIndex + ".webp";
 
-			User user = new User(name, email, password, type, phone, address, imageName);
+			User user = new User(name, email, password, "user", phone, address, imageName);
 			if (user is not null)
 			{
 				if (unitOfWork.Users.Find(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault() is not null)
@@ -58,13 +80,10 @@ namespace ProjetDotNet.Controllers
 			return View(users);
 		}
 
-		//LogOut 
-		[HttpPost]
-		[Route("/LogOut")]
 		public IActionResult LogOut()
 		{
-			//tfasa5 el session
-			return View("Index");
+			HttpContext.Session.SetString("currentUser", "");
+			return Redirect("/Connection");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
