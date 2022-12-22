@@ -9,7 +9,15 @@ namespace ProjetDotNet.Data
 	{
 		public MessageRepository(ChatAppContext _applicationDbContext) : base(_applicationDbContext)
 		{
+		}
 
+		public IEnumerable<Message> GetAllMessages(User currentUser, int contactId)
+		{
+			return Find(c => (c.ReceiverId == currentUser.Id
+								  && c.SenderId == contactId) ||
+								  (c.ReceiverId == contactId
+								  && c.SenderId == currentUser.Id))
+								  .OrderBy(c => c.CreatedAt).ToList();
 		}
 	}
 }

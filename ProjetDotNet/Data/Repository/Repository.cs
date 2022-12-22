@@ -5,7 +5,7 @@ namespace ProjetDotNet.Data.Repository
 {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
-		private readonly ChatAppContext _applicationDbContext;
+		protected readonly ChatAppContext _applicationDbContext;
 		public Repository(ChatAppContext _applicationDbContext)
 		{
 			this._applicationDbContext = _applicationDbContext;

@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using ProjetDotNet.Data.Context;
 using ProjetDotNet.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Session;
 using NuGet.Protocol;
 
 namespace ProjetDotNet.Controllers
@@ -21,7 +19,7 @@ namespace ProjetDotNet.Controllers
 			}
 			else
 			{
-				return Redirect("/Messenger");
+				return RedirectToAction("Index", "Messenger");
 			}
 		}
 
@@ -39,10 +37,8 @@ namespace ProjetDotNet.Controllers
 				HttpContext.Session.SetString("currentUser", user.ToJson().ToString());
 				User user2 = HttpContext.Session.GetString("currentUser").FromJson<User>();
 				Debug.WriteLine(user2.ToString());
-				return Redirect("/Messenger");
+				return RedirectToAction("Index", "Messenger");
 			}
-
-
 			return View("Index");
 		}
 
@@ -83,7 +79,7 @@ namespace ProjetDotNet.Controllers
 		public IActionResult LogOut()
 		{
 			HttpContext.Session.SetString("currentUser", "");
-			return Redirect("/Connection");
+			return Redirect("Login");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
