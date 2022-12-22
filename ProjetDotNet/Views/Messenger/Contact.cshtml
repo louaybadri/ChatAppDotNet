@@ -18,7 +18,7 @@
 			<div class="row g-0">
 
 				@* This is the chat section wich shows all the contacts *@
-				<div class="col-12 col-lg-5 col-xl-3 border-right">
+				<div class=" col-12 col-lg-5 col-xl-12">
 					<div class="px-4 d-none d-md-block">
 						<div class="d-flex align-items-center">
 							<div class="flex-grow-1">
@@ -47,7 +47,7 @@
 				</div>
 
 				@* This is the chat section wich depends on the user who signed in to this page*@
-				<div class="col-12 col-lg-5 col-xl-9">
+					@*<div class="col-12 col-lg-5 col-xl-9">
 					<div class="py-2 px-4 border-bottom d-none d-lg-block">
 						<div class="d-flex align-items-center py-1">
 							<div class="position-relative">
@@ -86,16 +86,16 @@
 
 						</div>
 					</div>
-				</div>
+				</div>*@
 			</div>
 		</div>
-		<div class="flex-grow-0 py-3 px-4 border-top fixed-bottom mw-75">
+		@*<div class="flex-grow-0 py-3 px-4 border-top fixed-bottom mw-75">
 			<form asp-action="SendMessage" method="post">
 				<div class="input-group">
 					<input type="text" class="form-control" name="msgValue" placeholder="Type your message">
 					<button type="Submit" class="btn btn-primary">Send</button>
 				</div>
 			</form>
-		</div>
+		</div>*@
 	</div>
 </main>
