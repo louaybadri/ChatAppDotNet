@@ -31,13 +31,17 @@ namespace ProjetDotNet.Controllers
 
 			UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
 			User? user = unitOfWork.Users.Find(x => x.Email == email && x.Password == password).FirstOrDefault();
-			ViewBag.Found = user is not null;
+
 			if (user is not null)
 			{
 				HttpContext.Session.SetString("currentUser", user.ToJson().ToString());
 				User user2 = HttpContext.Session.GetString("currentUser").FromJson<User>();
 				Debug.WriteLine(user2.ToString());
 				return RedirectToAction("Index", "Messenger");
+			}
+			else
+			{
+				ViewBag.EmailNotFound = email;
 			}
 			return View("Index");
 		}
@@ -61,6 +65,7 @@ namespace ProjetDotNet.Controllers
 				else
 				{
 					unitOfWork.Users.Add(user);
+					ViewBag.SignedUp = true;
 				}
 				unitOfWork.Complete();
 			}
@@ -79,7 +84,7 @@ namespace ProjetDotNet.Controllers
 		public IActionResult LogOut()
 		{
 			HttpContext.Session.SetString("currentUser", "");
-			return Redirect("Login");
+			return RedirectToAction("Login");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

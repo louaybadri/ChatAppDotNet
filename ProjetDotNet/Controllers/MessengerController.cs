@@ -15,7 +15,7 @@ namespace ProjetDotNet.Controllers
 		{
 			_logger = logger;
 		}
-		[HttpPost]
+		[HttpGet]
 		[Route("/Messenger")]
 		public IActionResult Index()
 		{
@@ -28,7 +28,9 @@ namespace ProjetDotNet.Controllers
 			{
 
 				UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
-				return View("contact", unitOfWork.Users.GetAll().ToList());
+				IEnumerable<User> users = unitOfWork.Users.GetAll().ToList();
+				users = users.Where(x => x.Id != HttpContext.Session.GetString("currentUser").FromJson<User>().Id);
+				return View("contact", users);
 			}
 		}
 
@@ -38,8 +40,7 @@ namespace ProjetDotNet.Controllers
 		[Route("/Messenger/{contactId}")]
 		public IActionResult SendMessage([FromRoute] int contactId)
 		{
-			User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
-			Debug.WriteLine(contactId);
+
 
 			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
 			{
@@ -47,17 +48,18 @@ namespace ProjetDotNet.Controllers
 			}
 			else
 			{
+				User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
 				UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
-				User Receiver = unitOfWork.Users.Get(contactId);
-				List<User> users = new List<User>
-			{
-					currentUser,
-					Receiver
-			};
-				if (currentUser is null)
+				User? Receiver = unitOfWork.Users.Get(contactId);
+				if (Receiver == null)
 				{
-					Debug.WriteLine("test test");
+					return RedirectToAction("Index");
 				}
+				List<User> users = new List<User>
+										{
+												currentUser,
+												Receiver
+										};
 
 				return View("index", new Tuple<List<User>, IEnumerable<Message>>(
 
@@ -68,19 +70,41 @@ namespace ProjetDotNet.Controllers
 			}
 		}
 
+
+		[Route("/Messenger/{id}")]
+		public IActionResult DeleteMessage([FromRoute] int id, string msgValue)
+		{
+			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
+			{
+				return RedirectToAction("Login", "Connection");
+			}
+			else
+			{
+				User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
+				UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
+				unitOfWork.Messages.Remove();
+				unitOfWork.Complete();
+				return RedirectToAction("SendMessage", "Messenger");
+			}
+		}
+
 		[HttpPost]
 		[Route("/Messenger/{id}")]
 		public IActionResult SendMessage([FromRoute] int id, string msgValue)
 		{
-			Debug.WriteLine(id);
-			Debug.WriteLine(msgValue);
-			User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
-			Message message = new Message(currentUser.Id, id, msgValue, DateTime.Now, DateTime.Now);
-			UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
-			unitOfWork.Messages.Add(message);
-			unitOfWork.Complete();
-			Debug.WriteLine("message sent ");
-			return RedirectToAction("SendMessage", "Messenger");
+			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
+			{
+				return RedirectToAction("Login", "Connection");
+			}
+			else
+			{
+				User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
+				Message message = new Message(currentUser.Id, id, msgValue, DateTime.Now, DateTime.Now);
+				UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
+				unitOfWork.Messages.Add(message);
+				unitOfWork.Complete();
+				return RedirectToAction("SendMessage", "Messenger");
+			}
 		}
 	}
 }

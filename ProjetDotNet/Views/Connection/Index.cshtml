@@ -1,6 +1,6 @@
 ﻿<link rel="stylesheet" runat="server" media="screen" href="~/css/login.css" />
 @{
-	if(ViewBag.EmailFound != null ){
+	if (ViewBag.EmailFound != null) {
 		<div class= "alert alert-danger"
 		style="
 				padding: 3%;
@@ -9,7 +9,32 @@
 				color:red;
 				background-color:hsl(0,43.48%,90.98%);
 				"> 
-		This Email @ViewBag.EmailFound is already used</div>
+			This Email @ViewBag.EmailFound is already used</div>
+	}
+	else if (ViewBag.EmailNotFound !=null)
+	{
+		<div class="alert alert-danger"
+	 	style="
+					padding: 3%;
+					text-align: center;
+					width: 100%;
+					color:red;
+					background-color:hsl(0,43.48%,90.98%);
+					">
+			This Email Not Registered yet
+		</div>
+	}else if (ViewBag.SignedUp != null ){
+		<div class="alert alert-success"
+	 	style="
+						padding: 3%;
+						text-align: center;
+						width: 100%;
+						color:hsl(129.68,51.67%,23.53%);
+						background-color:rgb(212,237,218);
+						">
+	 	
+			Your Account has been created, please log In
+		</div>
 	}
 }
 
@@ -21,10 +46,6 @@
 			<input type="text" placeholder="Name" name="name" required />
 			<input type="email" placeholder="Email" name="email" required />
 			<input type="password" placeholder="Password" name="password" required />
-			@*<input type="radio" id="choice1" name="type" value="email" />
-			<label for="choice1">Teacher</label>
-			<input type="radio" id="choice2" name="type" value="phone" />
-			<label for="choice2">Student</label>*@
             <input type="text" placeholder="Phone Number" name="phone" required/>
             <input type="text" placeholder="Address" name="address" required/>
             <button type="Submit">Sign Up</button>
