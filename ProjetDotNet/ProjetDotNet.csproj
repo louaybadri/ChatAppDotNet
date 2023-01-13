@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Remove="Data\Repository\ITeacherRepository.cs" />
     <Compile Remove="Data\Repository\TeacherRepository.cs" />
+    <Compile Remove="Views\User\Index.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
