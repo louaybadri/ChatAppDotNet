@@ -37,7 +37,7 @@ namespace ProjetDotNet.Controllers
 			user.Address = address;
 			unitOfWork.Users.UpdateUser(user.Id, user);
 			ViewBag.updateSuccess = unitOfWork.Complete();
-			return View("Index",user);
+			return View("Index", user);
 		}
 	}
 }
