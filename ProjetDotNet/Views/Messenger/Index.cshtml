@@ -25,14 +25,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+            
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Logout</a>
-            </li>
+            
+               <a asp-controller="Connection" asp-action="LogOut">Logout</a>
+           
         </form>
     </div>
 </nav>
@@ -45,7 +43,7 @@
 				<h1 class="h3 mb-3">Messages</h1>
 				<a href="/Messenger"><h1 class="h5 mb-3 text-black">Back to All Contacts</h1></a>
 			</div>
-			<a asp-controller="Connection" asp-action="LogOut"><h1 class="h3 mb-3">Logout</h1></a>
+			
 		</div>
 		<p id="SpecialId" hidden>@Model.Item1[0].Id</p>
 		

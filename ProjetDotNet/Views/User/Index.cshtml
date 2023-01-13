@@ -10,22 +10,7 @@ User user = Model;
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="~/css/profile.css" />
-@{
-    if (ViewBag.updateSuccess is not null ){
 
-   <div class="alert alert-success"
-	 	style="
-						padding: 3%;
-						text-align: center;
-						width: 100%;
-						color:hsl(129.68,51.67%,23.53%);
-						background-color:rgb(212,237,218);
-						">
-	 	
-			Your Account has been Updated
-	</div>
-}
-}
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
         aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,18 +25,31 @@ User user = Model;
             <li class="nav-item active">
                 <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+            
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Logout</a>
-            </li>
+            
+               <a asp-controller="Connection" asp-action="LogOut">Logout</a>
+           
         </form>
     </div>
 </nav>
+@{
+    if (ViewBag.updateSuccess is not null ){
 
+   <div 
+	 	style="
+						padding: 3%;
+						text-align: center;
+						width: 100%;
+						color:hsl(129.68,51.67%,23.53%);
+						background-color:rgb(212,237,218);
+						">
+	 	
+			Your Account has been Updated
+	</div>
+}
+}
 <div class="container">
     <div class="row gutters">
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">

@@ -25,9 +25,9 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Logout</a>
-            </li>
+          
+               <a asp-controller="Connection" asp-action="LogOut">Logout</a>
+            
         </form>
     </div>
 </nav>
@@ -37,7 +37,6 @@
 	<div class="container p-0">
 		<div class="d-flex justify-content-between">
 			<h1 class="h3 mb-3">Messages</h1>
-			<a asp-controller="Connection" asp-action="LogOut"><h1 class="h3 mb-3">Logout</h1></a>
 		</div>
 		<div class="card p-2 ">
 			<div class="row g-0">
