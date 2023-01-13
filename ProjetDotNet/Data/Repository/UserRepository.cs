@@ -9,9 +9,16 @@ namespace ProjetDotNet.Data.Repository
 		public UserRepository(ChatAppContext _applicationDbContext) : base(_applicationDbContext)
 		{
 		}
-		public User UpdateUser(User user)
+		public User UpdateUser(int id, User user)
 		{
-			_applicationDbContext.User.Update(user);
+			User UserToUpdate = Get(id);
+
+			UserToUpdate.Name = user.Name;
+			UserToUpdate.Email = user.Email;
+			UserToUpdate.Password = user.Password;
+			UserToUpdate.Phone = user.Phone;
+			UserToUpdate.Address = user.Address;
+			_applicationDbContext.User.Update(UserToUpdate);
 			return user;
 		}
 	}

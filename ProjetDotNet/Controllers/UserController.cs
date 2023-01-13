@@ -35,9 +35,9 @@ namespace ProjetDotNet.Controllers
 			user.Password = password;
 			user.Phone = phone;
 			user.Address = address;
-			unitOfWork.Users.UpdateUser(user);
-			ViewBag.updateSuccess(unitOfWork.Complete());
-			return View("Index");
+			unitOfWork.Users.UpdateUser(user.Id, user);
+			ViewBag.updateSuccess = unitOfWork.Complete();
+			return View("Index",user);
 		}
 	}
 }
