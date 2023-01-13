@@ -1,11 +1,13 @@
-
-using System.Diagnostics;
+using Microsoft.Build.Execution;
+using ProjetDotNet.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+builder.Services.AddSignalR();
+builder.Services.AddRazorPages();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +29,11 @@ app.UseSession();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=connection}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapRazorPages();
+	endpoints.MapHub<ChatHub>("/Messenger/{Id}");
+});
 
 
 

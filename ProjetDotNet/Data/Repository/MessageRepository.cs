@@ -1,7 +1,7 @@
 ﻿using ProjetDotNet.Data.Context;
 using ProjetDotNet.Data.Repository;
 using ProjetDotNet.Models;
-using System.Linq.Expressions;
+
 
 namespace ProjetDotNet.Data
 {
@@ -19,5 +19,14 @@ namespace ProjetDotNet.Data
 								  && c.SenderId == currentUser.Id))
 								  .OrderBy(c => c.CreatedAt).ToList();
 		}
+
+		public Message UpdateMessage(int id, string newMessage)
+		{
+			Message msgToUpdate = Get(id);
+			msgToUpdate.MessageText = newMessage;
+			_applicationDbContext.Message.Update(msgToUpdate);
+			return msgToUpdate;
+		}
+
 	}
 }

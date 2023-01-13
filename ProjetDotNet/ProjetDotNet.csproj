@@ -22,6 +22,7 @@
     <None Remove="Data\Repository\NewFile.txt" />
     <None Remove="Models\NewFile.txt" />
     <None Remove="Views\Connection\NewFile.txt" />
+    <None Remove="Views\User\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>

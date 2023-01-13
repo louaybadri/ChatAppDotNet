@@ -5,7 +5,7 @@ namespace ProjetDotNet.Data.Context
 {
 	public class ChatAppContext : DbContext
 	{
-		public DbSet<User> User{ get; set; }
+		public DbSet<User> User { get; set; }
 		public DbSet<Message> Message { get; set; }
 		private static ChatAppContext? _instance;
 		public static ChatAppContext Instance

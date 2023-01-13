@@ -2,8 +2,6 @@
 using NuGet.Protocol;
 using ProjetDotNet.Data.Context;
 using ProjetDotNet.Models;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ProjetDotNet.Controllers
 {
@@ -34,14 +32,10 @@ namespace ProjetDotNet.Controllers
 			}
 		}
 
-
-
 		[HttpGet]
 		[Route("/Messenger/{contactId}")]
 		public IActionResult SendMessage([FromRoute] int contactId)
 		{
-
-
 			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
 			{
 				return RedirectToAction("Login", "Connection");
@@ -70,9 +64,27 @@ namespace ProjetDotNet.Controllers
 			}
 		}
 
+		[Route("/Messenger/Delete/{msgId}")]
+		public IActionResult DeleteMessage([FromRoute] int msgId)
+		{
 
-		[Route("/Messenger/{id}")]
-		public IActionResult DeleteMessage([FromRoute] int id, string msgValue)
+			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
+			{
+				return RedirectToAction("Login", "Connection");
+			}
+			else
+			{
+				User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
+				UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
+				Message msgToDel = unitOfWork.Messages.Get(id: msgId);
+				unitOfWork.Messages.Remove(msgToDel);
+				unitOfWork.Complete();
+				return Redirect("/Messenger/" + msgToDel.ReceiverId);
+			}
+		}
+
+		[Route("/Messenger/Update/")]
+		public IActionResult UpdateMessage(int msgId, string newMsg)
 		{
 			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
 			{
@@ -82,19 +94,24 @@ namespace ProjetDotNet.Controllers
 			{
 				User currentUser = HttpContext.Session.GetString("currentUser").FromJson<User>();
 				UnitOfWork unitOfWork = new UnitOfWork(ChatAppContext.Instance);
-				unitOfWork.Messages.Remove();
+				Message msg = unitOfWork.Messages.UpdateMessage(msgId, newMsg);
 				unitOfWork.Complete();
-				return RedirectToAction("SendMessage", "Messenger");
+				return Redirect("/Messenger/" + msg.ReceiverId);
 			}
 		}
 
 		[HttpPost]
-		[Route("/Messenger/{id}")]
+		[Route("/Messenger/{Id}")]
 		public IActionResult SendMessage([FromRoute] int id, string msgValue)
 		{
+
 			if (HttpContext.Session.GetString("currentUser") is null || HttpContext.Session.GetString("currentUser") == "")
 			{
 				return RedirectToAction("Login", "Connection");
+			}
+			else if (msgValue == null)
+			{
+				return RedirectToAction("SendMessage", "Messenger");
 			}
 			else
 			{

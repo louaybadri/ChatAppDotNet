@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.Data.SqlClient;
 using ProjetDotNet.Data.Context;
 
 namespace ProjetDotNet.Data.Repository
@@ -29,6 +30,7 @@ namespace ProjetDotNet.Data.Repository
 			try
 			{
 				_applicationDbContext.Set<TEntity>().Add(entity);
+
 
 				return true;
 			}
