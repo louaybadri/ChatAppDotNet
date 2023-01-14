@@ -24,6 +24,7 @@ namespace ProjetDotNet.Data
 		{
 			Message msgToUpdate = Get(id);
 			msgToUpdate.MessageText = newMessage;
+			msgToUpdate.LastUpdatedAt = DateTime.Now;
 			_applicationDbContext.Message.Update(msgToUpdate);
 			return msgToUpdate;
 		}
